@@ -12,21 +12,24 @@ export default function Register() {
 
   async function handleRegister(e) {
     e.preventDefault();
-
+  
     const res = await fetch('/api/users', {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ user: formData }),
     });
-
+  
     const data = await res.json();
-
-    if (data.errors) {
+  
+    if (res.status === 422) {
       setErrors(data.errors);
     } else {
       console.log(data);
     }
   }
-
+  
   return (
     <>
       <h1 className="title">Register a new account</h1>
